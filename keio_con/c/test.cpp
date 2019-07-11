@@ -2,9 +2,7 @@
 using namespace std;
 
 string s;
-
 long long it;
-
 vector<string> perm;
 
 long long numCalc(vector<long long> num, string ope) {
@@ -12,7 +10,8 @@ long long numCalc(vector<long long> num, string ope) {
 	
 	for(long long o=0;o<3;o++) {
 		for(long long i=0;i<ope.size();i++) {
-			if(find(perm[o].begin(), perm[o].end(),ope[i]) != perm[o].end()) {
+			if(find(perm[o].begin(), perm[o].end(),ope[i]) != perm[o].end()
+			{
 				if(ope[i]=='+')
 				{
 					num[i] += num[i+1];
@@ -54,7 +53,8 @@ long long calc(void)
 				ope.push_back(s[it]);
 			else
 			{
-				string tmp;
+				string tmp = "";
+				tmp += s[it++];
 				while(it<s.size())
 				{
 					if(s[it]<'0' or s[it]>'9')
@@ -62,25 +62,23 @@ long long calc(void)
 						it--;
 						break;
 					}
-					tmp+=s[it];
-					it++;
+					tmp+=s[it++];
 				}
-				num.push_back(stoi(tmp));
+				num.push_back(stoll(tmp));
 			}
 			it++;
-		
 		}
 	}
-	
-	return 0;
+	return numCalc(num, ope);
 }
 
 int main() {
 	cin >> s;
-	s+=')';
 	long long ans = LLONG_MIN;
 	for(int i=0;i<3;i++)
+	{
 		for(int j=0;j<3;j++)
+		{
 			for(int k=0;k<3;k++)
 			{
 				perm=vector<string>(3);
@@ -90,7 +88,7 @@ int main() {
 				it=0;
 				ans = max(ans, calc());
 			}
+		}
+	}
 	cout << ans << endl;
-
-
 }
