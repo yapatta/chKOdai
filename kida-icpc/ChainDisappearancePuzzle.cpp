@@ -22,6 +22,17 @@
 
 using namespace std;
 
+//次のようなインデックス構成でvectorを作る
+//
+//(0, 4), (1, 4), ..., (4, 4)
+//(0, 3), (1, 3), ..., (4, 3)
+//(0, 2), (1, 2), ..., (4, 2)
+//(0, 1), (1, 1), ..., (4, 1)
+//(0, 0), (1, 0), ..., (4, 0)
+//
+//こうすることでvector::eraseをするだけで
+//勝手に詰めてくれる．
+
 int main(void)
 {
 	cin.tie(0);
@@ -30,14 +41,37 @@ int main(void)
 	ll h;
 	while(cin>>h, h!=0){
 		vector<vll> field(5, vll(h));
-		for(int i=h-1; i>=0; i--)
-			rep(j, 5)
-				cin >> field[j][i];
-		while(true){
-			for(int i=h-1; i>=0; i--)
-				rep(j, 5)
-					
+		for(int i=h-1; i>=0; i--)rep(j, 5)
+			cin >> field[j][i];
+
+		ll ans=0;
+		bool loop = true;
+		while(loop){
+			loop = false;
+			for(int i=h-1; i>=0; i--){
+				ll left=0, right=0;
+				rep(j, 4){
+					if (i>=field[j].size() || i>=field[j+1].size()){
+						if (right-left>=2) break;
+						left=j+1;
+						continue;
+					}
+					if (field[j][i]==field[j+1][i]) right=j+1;
+					if (field[j][i]!=field[j+1][i]){
+						if (right-left>=2) break;
+						left=j+1;
+					}
+					if (right-left>=2) loop = true;
+				}
+				if (right-left>=2){
+					for(int k=left; k<=right; k++){
+						ans += field[k][i];
+						field[k].erase(field[k].begin()+i);
+					}
+				}
+			}
 		}
+		cout << ans << "\n";
 	}
 	return 0;
 }
