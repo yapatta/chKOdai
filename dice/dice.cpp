@@ -74,13 +74,13 @@ public:
 
   DiceFace Find(const T &data) const {
     const Dice<T> &x = *this;
+    DiceFace retval;
     for (DiceFace e : {TOP, BOTTOM, FRONT, BACK, LEFT, RIGHT}) {
       if (x[e] == data) {
-        return e;
+        retval = e;
       }
     }
-    //どうしようもない返り値
-    return TOP;
+    return retval;
   }
 
   int Adjust(T t, T f) {
@@ -124,7 +124,7 @@ void printSum()
     cout << ans[i];
   }
   cout << endl;
-  
+
   return;
 }
 
@@ -169,7 +169,7 @@ void changePlace(Dice<int> d, int x, int y)
     return;
 }
 
-int main() { 
+int main() {
   while(cin >> n)
   {
     if(n==0) break;

@@ -31,7 +31,7 @@ int main()
 		
 		/*for(auto itr=mlist.begin(); itr!=mlist.end(); itr++){
 			cout << *itr << endl;
-		}*/
+		}*/]
 
 		ll cnt0 = 0;
 		rep(i, n){
